@@ -12,7 +12,7 @@ interface PullRequestRowProps {
 export function PullRequestRow(props: PullRequestRowProps) {
   var labelBadges: JSX.Element[] = [];
   for (let i = 0; i < props.pr.labels.length; i++) {
-    labelBadges.push(<LabelBadge key={props.pr.labels[i].id} $primary={`#${props.pr.labels[i].color}`} className={"rounded-pill"}>{props.pr.labels[i].name}</LabelBadge>);
+    labelBadges.push(<LabelBadge key={props.pr.labels[i].id} $primary={`#${props.pr.labels[i].color}`} className={"rounded-pill mx-1"}>{props.pr.labels[i].name}</LabelBadge>);
   }
 
   return (
