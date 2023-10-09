@@ -5,6 +5,8 @@ import { BsCheckCircle } from "react-icons/bs";
 import { BiSolidUser } from "react-icons/bi";
 import { PullRequestObject } from "../backend/models/PullRequestObject";
 import React, { useEffect } from "react";
+import { observer } from 'mobx-react';
+import PullRequestStore from "../store/PullRequestStore";
 
 function getPullRequestQuery(repo: string): Promise<PullRequestObject[]> {
   let apiURL = 'https://api.github.com/repos/' + repo + '/pulls?' + new URLSearchParams({
@@ -27,28 +29,10 @@ function getPullRequestQuery(repo: string): Promise<PullRequestObject[]> {
 }
 
 
-export function MyPullRequests() {
-  const [pullRequests, setPullRequests] = React.useState<PullRequestObject[]>([]);
-  // let pullRequests = getPullRequests();
-
-  useEffect(() => {
-    let repos = ["symopsio/platform", "symopsio/webapp"]
-    let pullRequestQueries: Promise<PullRequestObject[]>[] = [];
-
-    repos.forEach(repo => {
-      pullRequestQueries.push(getPullRequestQuery(repo));
-    })
-
-    Promise.all(pullRequestQueries).then((allPullRequestData) => {
-      console.log("Made GitHub API calls to get PRs.")
-      let flatPullRequestData = allPullRequestData.flat();
-      setPullRequests(flatPullRequestData);
-    });
-  }, [setPullRequests]);
-
+export const MyPullRequests = observer(() => {
   var pullRequestRows: JSX.Element[] = [];
-  for (let i = 0; i < pullRequests.length; i++) {
-    pullRequestRows.push(<PullRequestRow key={pullRequests[i].id} pr={pullRequests[i]} />);
+  for (let i = 0; i < PullRequestStore.myPullRequests.length; i++) {
+    pullRequestRows.push(<PullRequestRow key={PullRequestStore.myPullRequests[i].id} pr={PullRequestStore.myPullRequests[i]} />);
   }
 
   return (
@@ -72,4 +56,4 @@ export function MyPullRequests() {
       </Card.Body>
     </Card>
   )
-}
+});

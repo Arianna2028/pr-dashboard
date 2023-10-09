@@ -6,6 +6,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import './App.css';
 
 import { MyPullRequests } from './components/MyPullRequests';
+import PullRequestStore from './store/PullRequestStore';
 
 
 
@@ -122,6 +123,10 @@ function PullRequests() {
 
 
 function App() {
+  useEffect(() => {
+    PullRequestStore.loadPullRequests();
+  }, []);
+
   return (
     <div className={"app"}>
       <Container className={"py-4"}>
