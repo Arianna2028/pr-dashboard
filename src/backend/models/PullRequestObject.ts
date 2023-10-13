@@ -23,11 +23,21 @@ export interface PullRequestBaseObject {
 
 export interface PullRequestObject {
   id: number;
+
+  /** The API URL to get more information about this PR. */
+  url: string;
+
+  /** The URL a user would navigate to in the browser to see this PR. */
   html_url: string;
   title: string;
   number: number;
   user: UserObject;
   labels: LabelObject[];
   base: PullRequestBaseObject;
-  approvalStatus?: string;
+  myApprovalStatus?: string;
+}
+
+export interface PullRequestReviewObject {
+  user: UserObject;
+  state: string;
 }

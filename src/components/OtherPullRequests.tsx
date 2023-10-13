@@ -9,15 +9,16 @@ import { observer } from 'mobx-react';
 import PullRequestStore from "../store/PullRequestStore";
 
 
-export const MyPullRequests = observer(() => {
+
+export const OtherPullRequests = observer(() => {
   var pullRequestRows: JSX.Element[] = [];
-  for (let i = 0; i < PullRequestStore.myPullRequests.length; i++) {
-    pullRequestRows.push(<PullRequestRow key={PullRequestStore.myPullRequests[i].id} pr={PullRequestStore.myPullRequests[i]} />);
+  for (let i = 0; i < PullRequestStore.otherPullRequests.length; i++) {
+    pullRequestRows.push(<PullRequestRow key={PullRequestStore.otherPullRequests[i].id} pr={PullRequestStore.otherPullRequests[i]} />);
   }
 
   return (
-    <Card className="pr-card">
-      <Card.Title className={"px-3 py-2 mb-0 text-white"}>My PRs</Card.Title>
+    <Card className="pr-card mt-3">
+      <Card.Title className={"px-3 py-2 mb-0 text-white"}>Open PRs</Card.Title>
       <Card.Body>
         <div className={"pr-table text-white mx-3"}>
           <Row className={"py-2"}>

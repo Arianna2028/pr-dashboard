@@ -6,3 +6,11 @@
 .pr-row:hover {
     background-color: rgba(223,223,255,.18);
 }
+
+.review-icon-approved {
+    color: rgb(35, 134, 54);
+}
+
+.review-icon-changes-requested {
+    color: #DA3633;
+}

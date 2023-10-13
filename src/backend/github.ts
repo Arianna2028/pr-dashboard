@@ -1,4 +1,4 @@
-import { PullRequestObject } from "./models/PullRequestObject";
+import { PullRequestObject, PullRequestReviewObject } from "./models/PullRequestObject";
 
 export class GitHub {
 
@@ -20,5 +20,30 @@ export class GitHub {
       .then((response) => {
         return response as PullRequestObject[]; // Cast the response type to our interface
       });
+  }
+
+  public static async getPullRequestReviewStatus(pr_api_url: string): Promise<string> {
+    // TODO: Pagination. Default is 30 items.
+    let apiURL = pr_api_url + '/reviews';
+
+    return fetch(apiURL, {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + process.env.REACT_APP_GITHUB_TOKEN
+      },
+    })
+      .then((response) => response.json()) // Parse the response in JSON
+      .then((response) => response as PullRequestReviewObject[]) // Cast the response type to our interface
+      .then((response) => {
+        // Reviews are returned in chronological order, so start from the most recent.
+        for (let i = response.length; i > 0; i--) {
+          // TODO: Pull from authenticated user.
+          if (response[i - 1].user.login === "Arianna2028") {
+            return response[i - 1].state;
+          }
+        }
+
+        return "NOT_YET_REVIEWED"
+      })
   }
 }

@@ -7,6 +7,7 @@ import './App.css';
 
 import { MyPullRequests } from './components/MyPullRequests';
 import PullRequestStore from './store/PullRequestStore';
+import { OtherPullRequests } from './components/OtherPullRequests';
 
 
 
@@ -133,6 +134,7 @@ function App() {
         <Row>
           <Col>
             <MyPullRequests />
+            <OtherPullRequests />
           </Col>
         </Row>
       </Container>
