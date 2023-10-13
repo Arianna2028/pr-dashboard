@@ -42,7 +42,7 @@ export function PullRequestRow(props: PullRequestRowProps) {
           repo={props.pr.base.repo.full_name}
           prNumber={props.pr.number}
         />
-        <Col className={"text-end"}>
+        <Col xs={"auto"} className={"text-end"}>
           {labelBadges}
         </Col>
       </Row>
