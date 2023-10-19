@@ -1,3 +1,8 @@
+# Running this Locally
+Create a file called `.env.development.local`. This is where environment variables go.
+Add an environment variable called `REACT_APP_GITHUB_TOKEN` and set it to a **classic** GitHub token. It needs to be able to read repos and reviews at least.
+Run `npm start` to start the app.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

@@ -126,6 +126,13 @@ function PullRequests() {
 function App() {
   useEffect(() => {
     PullRequestStore.loadPullRequests();
+
+    const interval = setInterval(() => {
+      PullRequestStore.loadPullRequests();
+    }, 300000);  // 5 minutes in milliseconds
+
+    // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
+    return () => clearInterval(interval);
   }, []);
 
   return (
