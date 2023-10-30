@@ -34,6 +34,7 @@ export interface PullRequestObject {
   user: UserObject;
   labels: LabelObject[];
   base: PullRequestBaseObject;
+  draft: boolean;
   myApprovalStatus?: string;
 }
 

@@ -6,7 +6,7 @@ import { LabelBadge } from "./LabelBadge";
 import { PullRequestObject } from "../backend/models/PullRequestObject";
 import "./PullRequestRow.css";
 import { BsCheckCircleFill } from "react-icons/bs";
-import { VscRequestChanges } from "react-icons/vsc";
+import { VscGitPullRequestDraft, VscRequestChanges } from "react-icons/vsc";
 
 interface PullRequestRowProps {
   pr: PullRequestObject;
@@ -19,7 +19,9 @@ export function PullRequestRow(props: PullRequestRowProps) {
   }
 
   let reviewIcon: JSX.Element;
-  if (props.pr.myApprovalStatus === "APPROVED") {
+  if (props.pr.draft) {
+    reviewIcon = <VscGitPullRequestDraft className="review-icon-draft" />
+  } else if (props.pr.myApprovalStatus === "APPROVED") {
     reviewIcon = <BsCheckCircleFill className="review-icon-approved" />;
   } else if (props.pr.myApprovalStatus === "CHANGES_REQUESTED") {
     reviewIcon = <VscRequestChanges className="review-icon-changes-requested" />
