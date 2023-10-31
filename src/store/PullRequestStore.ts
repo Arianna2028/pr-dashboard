@@ -13,7 +13,7 @@ class PullRequestStore {
 
   loadPullRequests() {
     // TODO: Pull from repo list
-    let repos = ["symopsio/platform", "symopsio/webapp"]
+    let repos = ["symopsio/platform", "symopsio/webapp", "symopsio/sym-flow-cli", "symopsio/sym-sdk"]
     let pullRequestQueries: Promise<PullRequestObject[]>[] = [];
 
     repos.forEach(repo => {
