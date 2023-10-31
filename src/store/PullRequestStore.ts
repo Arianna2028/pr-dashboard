@@ -32,11 +32,11 @@ class PullRequestStore {
               this.allPullRequests = flatPullRequestData;
               this.myPullRequests = flatPullRequestData.filter((pullRequest) => {
                 // TODO: Pull from authenticated user.
-                return pullRequest.user.login === "Arianna2028";
+                return pullRequest.user.login === process.env.REACT_APP_GITHUB_USERNAME;
               });
               this.otherPullRequests = flatPullRequestData.filter((pullRequest) => {
                 // TODO: Pull from authenticated user.
-                return pullRequest.user.login !== "Arianna2028";
+                return pullRequest.user.login !== process.env.REACT_APP_GITHUB_USERNAME;
               });
             }));
         }

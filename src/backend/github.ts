@@ -38,7 +38,7 @@ export class GitHub {
         // Reviews are returned in chronological order, so start from the most recent.
         for (let i = response.length; i > 0; i--) {
           // TODO: Pull from authenticated user.
-          if (response[i - 1].user.login === "Arianna2028") {
+          if (response[i - 1].user.login === process.env.REACT_APP_GITHUB_USERNAME) {
             return response[i - 1].state;
           }
         }
