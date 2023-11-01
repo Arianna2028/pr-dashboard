@@ -37,9 +37,11 @@ export class GitHub {
       .then((response) => {
         // Reviews are returned in chronological order, so start from the most recent.
         for (let i = response.length; i > 0; i--) {
+          let review = response[i - 1];
           // TODO: Pull from authenticated user.
-          if (response[i - 1].user.login === process.env.REACT_APP_GITHUB_USERNAME) {
-            return response[i - 1].state;
+          // Exclude reviews that are just comments, since they do not affect the megeability of the PR.
+          if (review.user.login === process.env.REACT_APP_GITHUB_USERNAME && review.state !== "COMMENTED") {
+            return review.state;
           }
         }
 
