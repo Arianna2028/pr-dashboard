@@ -1,4 +1,4 @@
-import { PullRequestObject, PullRequestReviewObject } from "./models/PullRequestObject";
+import { PullRequestObject, PullRequestReviewObject, PullRequestReviewStatus } from "./models/PullRequestObject";
 
 export class GitHub {
 
@@ -22,7 +22,7 @@ export class GitHub {
       });
   }
 
-  public static async getPullRequestReviewStatus(pr_api_url: string): Promise<string> {
+  public static async getPullRequestReviewStatus(pr_api_url: string): Promise<PullRequestReviewStatus> {
     // TODO: Pagination. Default is 30 items.
     let apiURL = pr_api_url + '/reviews';
 
@@ -35,17 +35,27 @@ export class GitHub {
       .then((response) => response.json()) // Parse the response in JSON
       .then((response) => response as PullRequestReviewObject[]) // Cast the response type to our interface
       .then((response) => {
+        var reviewStatus = "NOT_YET_REVIEWED"
+        var commentStatus = false;
+
         // Reviews are returned in chronological order, so start from the most recent.
-        for (let i = response.length; i > 0; i--) {
-          let review = response[i - 1];
+        for (let i = 0; i < response.length; i++) {
+          let review = response[i];
+
           // TODO: Pull from authenticated user.
-          // Exclude reviews that are just comments, since they do not affect the megeability of the PR.
-          if (review.user.login === process.env.REACT_APP_GITHUB_USERNAME && review.state !== "COMMENTED") {
-            return review.state;
+          if (review.user.login === process.env.REACT_APP_GITHUB_USERNAME) {
+            if (review.state === "COMMENTED") {
+              commentStatus = true;
+            } else {
+              reviewStatus = review.state;
+            }
           }
         }
 
-        return "NOT_YET_REVIEWED"
+        return {
+          approvalStatus: reviewStatus,
+          commentStatus: commentStatus
+        }
       })
   }
 }

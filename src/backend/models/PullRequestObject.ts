@@ -35,10 +35,23 @@ export interface PullRequestObject {
   labels: LabelObject[];
   base: PullRequestBaseObject;
   draft: boolean;
+
+  /** The current user's review status for this PR (e.g. "APPROVED", "CHANGES_REQUESTED").
+   * Does not include the "COMMENTED" status.
+   */
   myApprovalStatus?: string;
+
+  /** Whether the current user has left comments on this PR. */
+  haveCommented?: boolean;
 }
 
 export interface PullRequestReviewObject {
   user: UserObject;
   state: string;
+}
+
+
+export interface PullRequestReviewStatus {
+  approvalStatus: string;
+  commentStatus: boolean;
 }

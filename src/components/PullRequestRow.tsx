@@ -6,7 +6,7 @@ import { LabelBadge } from "./LabelBadge";
 import { PullRequestObject } from "../backend/models/PullRequestObject";
 import "./PullRequestRow.css";
 import { BsCheckCircleFill } from "react-icons/bs";
-import { VscGitPullRequestDraft, VscRequestChanges } from "react-icons/vsc";
+import { VscComment, VscGitPullRequestDraft, VscRequestChanges } from "react-icons/vsc";
 
 import Button from 'react-bootstrap/Button';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
@@ -33,12 +33,18 @@ export function PullRequestRow(props: PullRequestRowProps) {
     reviewIcon = <BsCheckCircleFill className="review-icon-approved" />;
   } else if (props.pr.myApprovalStatus === "CHANGES_REQUESTED") {
     reviewIcon = <VscRequestChanges className="review-icon-changes-requested" />
+  } else if (props.pr.haveCommented) {
+    reviewIcon = <VscComment className="review-icon-unreviewed" />
   } else {
     reviewIcon = <FaUserClock className="review-icon-unreviewed" />
   }
 
   const reviewIconTooltip = (tooltipProps: TooltipProps) => {
     let approvalStatus = props.pr.myApprovalStatus?.toLowerCase().replaceAll("_", " ");
+
+    if (approvalStatus === "not yet reviewed" && props.pr.haveCommented) {
+      approvalStatus = "commented";
+    }
 
     return (
       <Tooltip id={`review-icon-tooltip-${props.pr.id}`} {...tooltipProps}>

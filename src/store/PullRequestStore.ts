@@ -27,7 +27,8 @@ class PullRequestStore {
         for (let i = 0; i < flatPullRequestData.length; i++) {
           GitHub.getPullRequestReviewStatus(flatPullRequestData[i].url).then(
             action("Set Review Status", (reviewStatus) => {
-              flatPullRequestData[i].myApprovalStatus = reviewStatus;
+              flatPullRequestData[i].myApprovalStatus = reviewStatus.approvalStatus;
+              flatPullRequestData[i].haveCommented = reviewStatus.commentStatus;
 
               this.allPullRequests = flatPullRequestData;
               this.myPullRequests = flatPullRequestData.filter((pullRequest) => {
