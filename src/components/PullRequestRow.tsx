@@ -8,9 +8,17 @@ import "./PullRequestRow.css";
 import { BsCheckCircleFill } from "react-icons/bs";
 import { VscGitPullRequestDraft, VscRequestChanges } from "react-icons/vsc";
 
+import Button from 'react-bootstrap/Button';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip, { TooltipProps } from 'react-bootstrap/Tooltip';
+import { RefAttributes } from "react";
+import { JSX } from "react/jsx-runtime";
+
 interface PullRequestRowProps {
   pr: PullRequestObject;
 }
+
+
 
 export function PullRequestRow(props: PullRequestRowProps) {
   var labelBadges: JSX.Element[] = [];
@@ -29,25 +37,41 @@ export function PullRequestRow(props: PullRequestRowProps) {
     reviewIcon = <FaUserClock className="review-icon-unreviewed" />
   }
 
+  const reviewIconTooltip = (tooltipProps: TooltipProps) => {
+    let approvalStatus = props.pr.myApprovalStatus?.toLowerCase().replaceAll("_", " ");
+
+    return (
+      <Tooltip id={`review-icon-tooltip-${props.pr.id}`} {...tooltipProps}>
+        {approvalStatus}
+      </Tooltip>
+    );
+  };
+
   return (
-    <a href={props.pr.html_url} target="_blank" className={"pr-row-link"}>
-      <Row className={"pr-row py-2"}>
-        <PullRequestIconColumn>
-          {reviewIcon}
-        </PullRequestIconColumn>
-        <PullRequestIconColumn>
-          <Image src={props.pr.user.avatar_url} roundedCircle style={{ height: "24px", width: "24px" }} />
-        </PullRequestIconColumn>
-        <PullRequestTitleColumn
-          title={props.pr.title}
-          author={props.pr.user.login}
-          repo={props.pr.base.repo.full_name}
-          prNumber={props.pr.number}
-        />
-        <Col xs={"auto"} className={"text-end"}>
-          {labelBadges}
-        </Col>
-      </Row>
-    </a>
+    <OverlayTrigger
+      placement="left"
+      delay={{ show: 750, hide: 200 }}
+      overlay={reviewIconTooltip}
+    >
+      <a href={props.pr.html_url} target="_blank" className={"pr-row-link"}>
+        <Row className={"pr-row py-2"}>
+          <PullRequestIconColumn>
+            {reviewIcon}
+          </PullRequestIconColumn>
+          <PullRequestIconColumn>
+            <Image src={props.pr.user.avatar_url} roundedCircle style={{ height: "24px", width: "24px" }} />
+          </PullRequestIconColumn>
+          <PullRequestTitleColumn
+            title={props.pr.title}
+            author={props.pr.user.login}
+            repo={props.pr.base.repo.full_name}
+            prNumber={props.pr.number}
+          />
+          <Col xs={"auto"} className={"text-end"}>
+            {labelBadges}
+          </Col>
+        </Row>
+      </a>
+    </OverlayTrigger>
   )
 }
