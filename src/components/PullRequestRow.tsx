@@ -8,10 +8,8 @@ import "./PullRequestRow.css";
 import { BsCheckCircleFill } from "react-icons/bs";
 import { VscComment, VscGitPullRequestDraft, VscRequestChanges } from "react-icons/vsc";
 
-import Button from 'react-bootstrap/Button';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip, { TooltipProps } from 'react-bootstrap/Tooltip';
-import { RefAttributes } from "react";
 import { JSX } from "react/jsx-runtime";
 
 interface PullRequestRowProps {
@@ -61,7 +59,7 @@ export function PullRequestRow(props: PullRequestRowProps) {
       delay={{ show: 750, hide: 200 }}
       overlay={reviewIconTooltip}
     >
-      <a href={props.pr.html_url} target="_blank" className={"pr-row-link"}>
+      <a href={props.pr.html_url} target="_blank" rel="noreferrer" className={"pr-row-link"}>
         <Row className={"pr-row py-2"}>
           <PullRequestIconColumn>
             {reviewIcon}
