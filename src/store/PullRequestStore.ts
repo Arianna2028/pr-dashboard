@@ -13,7 +13,7 @@ class PullRequestStore {
 
   loadPullRequests() {
     // TODO: Pull from repo list
-    let repos = ["symopsio/platform", "symopsio/webapp", "symopsio/sym-flow-cli", "symopsio/sym-sdk"]
+    let repos = ["symopsio/platform", "symopsio/webapp", "symopsio/sym-flow-cli", "symopsio/sym-sdk", "symopsio/sym-demo-terraform"]
     let pullRequestQueries: Promise<PullRequestObject[]>[] = [];
 
     repos.forEach(repo => {
@@ -27,7 +27,8 @@ class PullRequestStore {
         for (let i = 0; i < flatPullRequestData.length; i++) {
           GitHub.getPullRequestReviewStatus(flatPullRequestData[i].url).then(
             action("Set Review Status", (reviewStatus) => {
-              flatPullRequestData[i].myApprovalStatus = reviewStatus.approvalStatus;
+              flatPullRequestData[i].myApprovalStatus = reviewStatus.userApprovalStatus;
+              flatPullRequestData[i].otherApprovalStatus = reviewStatus.otherApprovalStatus;
               flatPullRequestData[i].haveCommented = reviewStatus.commentStatus;
 
               this.allPullRequests = flatPullRequestData;

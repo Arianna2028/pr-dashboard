@@ -13,7 +13,14 @@ import PullRequestStore from "../store/PullRequestStore";
 export const OtherPullRequests = observer(() => {
   var pullRequestRows: JSX.Element[] = [];
   for (let i = 0; i < PullRequestStore.otherPullRequests.length; i++) {
-    pullRequestRows.push(<PullRequestRow key={PullRequestStore.otherPullRequests[i].id} pr={PullRequestStore.otherPullRequests[i]} />);
+    pullRequestRows.push(
+      <PullRequestRow
+        key={PullRequestStore.otherPullRequests[i].id}
+        pr={PullRequestStore.otherPullRequests[i]}
+        reviewStatus={PullRequestStore.otherPullRequests[i].myApprovalStatus || "NOT_YET_REVIEWED"}
+        accountForComments={true}
+      />
+    );
   }
 
   return (

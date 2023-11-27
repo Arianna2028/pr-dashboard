@@ -16,6 +16,8 @@ import { JSX } from "react/jsx-runtime";
 
 interface PullRequestRowProps {
   pr: PullRequestObject;
+  reviewStatus: string;
+  accountForComments: boolean;
 }
 
 
@@ -29,20 +31,20 @@ export function PullRequestRow(props: PullRequestRowProps) {
   let reviewIcon: JSX.Element;
   if (props.pr.draft) {
     reviewIcon = <VscGitPullRequestDraft className="review-icon-draft" />
-  } else if (props.pr.myApprovalStatus === "APPROVED") {
+  } else if (props.reviewStatus === "APPROVED") {
     reviewIcon = <BsCheckCircleFill className="review-icon-approved" />;
-  } else if (props.pr.myApprovalStatus === "CHANGES_REQUESTED") {
+  } else if (props.reviewStatus === "CHANGES_REQUESTED") {
     reviewIcon = <VscRequestChanges className="review-icon-changes-requested" />
-  } else if (props.pr.haveCommented) {
+  } else if (props.pr.haveCommented && props.accountForComments) {
     reviewIcon = <VscComment className="review-icon-unreviewed" />
   } else {
     reviewIcon = <FaUserClock className="review-icon-unreviewed" />
   }
 
   const reviewIconTooltip = (tooltipProps: TooltipProps) => {
-    let approvalStatus = props.pr.myApprovalStatus?.toLowerCase().replaceAll("_", " ");
+    let approvalStatus = props.reviewStatus.toLowerCase().replaceAll("_", " ");
 
-    if (approvalStatus === "not yet reviewed" && props.pr.haveCommented) {
+    if (approvalStatus === "not yet reviewed" && props.pr.haveCommented && props.accountForComments) {
       approvalStatus = "commented";
     }
 

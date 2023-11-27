@@ -41,6 +41,9 @@ export interface PullRequestObject {
    */
   myApprovalStatus?: string;
 
+  /** The review status of users other than the authenticated user. */
+  otherApprovalStatus?: string;
+
   /** Whether the current user has left comments on this PR. */
   haveCommented?: boolean;
 }
@@ -52,6 +55,12 @@ export interface PullRequestReviewObject {
 
 
 export interface PullRequestReviewStatus {
-  approvalStatus: string;
+  /** The authenticated user's review status of this PR. */
+  userApprovalStatus: string;
+
+  /** The review status of users other than the authenticated user. */
+  otherApprovalStatus: string;
+
+  /** Whether the authenticated user has left a review that is just comments on this PR. */
   commentStatus: boolean;
 }
