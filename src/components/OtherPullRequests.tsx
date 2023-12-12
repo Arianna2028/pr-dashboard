@@ -29,7 +29,7 @@ export const OtherPullRequests = observer(() => {
       }
     }
     setPullRequestRowsDisplay(pullRequestRows);
-  }, [showDrafts])
+  }, [showDrafts, PullRequestStore.otherPullRequests])
 
   return (
     <Card className="pr-card mt-3">
